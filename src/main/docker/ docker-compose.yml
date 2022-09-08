@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: cafeteria-db
+    environment:
+      - POSTGRES_USER=localcafeteria
+      - POSTGRES_PASSWORD=localcafeteria
+
+  app:
+    image: 'docker-spring-boot-energia:latest'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    container_name: cafeteria-app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/localcafeteria
+      - SPRING_DATASOURCE_USERNAME=localcafeteria
+      - SPRING_DATASOURCE_PASSWORD=localcafeteria
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - image-upload:/home/image-storage
+
+volumes:
+  image-upload:

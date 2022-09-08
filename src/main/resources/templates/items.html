@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Cafeteria</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>List Of Food Items</h1>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Item Image</th>
+                        <th>Item Name</th>
+                        <th>Item Price</th>
+                        <th>Item Quantity</th>
+                        <th>Item Remaining Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each = "item : ${food_items}">
+                        <td>
+                            <a
+                                    th:href="@{${'/items/addToBasket/' + item.id}}">
+                                <img th:src="@{${'/images/' + item.itemImageUrl}}" style="width: 80px; height: 80px; align:center;"/>
+                            </a>
+                        </td>
+                        <td th:text = "${item.itemName}"></td>
+                        <td th:text = "${item.itemPrice}"></td>
+                        <td th:text = "${item.itemQuantity}"></td>
+                        <td th:text = "${item.itemQuantity} - ${item.soldQuantity}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class = "row">
+            <div class = "col-lg-3">
+                <a th:href = "@{/items/new}" class = "btn btn-primary btn-sm mb-3 width:100px;"> Add Second Hand Item</a>
+            </div>
+        </div>
+        <div class="row">
+            <h1>List Of SecondHand Items</h1>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>Item Image</th>
+                    <th>Item Name</th>
+                    <th>Item Price</th>
+                    <th>Item Quantity</th>
+                    <th>Item Remaining Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "item : ${sh_items}">
+
+                    <td>
+                        <a
+                           th:href="@{${'/items/addToBasket/' + item.id}}">
+                            <img th:src="@{${'/images/' + item.itemImageUrl}}" style="width: 80px; height: 80px; align:center;"/>
+                        </a>
+                    </td>
+                    <td th:text = "${item.itemName}"></td>
+                    <td th:text = "${item.itemPrice}"></td>
+                    <td th:text = "${item.itemQuantity}"></td>
+                    <td th:text = "${item.itemQuantity} - ${item.soldQuantity}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class = "container">
+        <div class = "row">
+            <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class = "text-center"> Basket </h1>
+                <div class = "card-body">
+                    <form th:action="@{/items/checkout}" th:object = "${basket}" method="POST">
+                        <div class ="form-group">
+                            <label> Basket Total Price </label>
+                            <input
+                                    type = "text"
+                                    name = "totalPrice"
+                                    th:field = "*{totalPrice}"
+                                    class = "form-control"
+                                    readonly="true"
+                            />
+                        </div>
+
+                        <div class ="form-group">
+                            <label> Basket Paid Money </label>
+                            <input
+                                    type = "text"
+                                    name = "paidMoney"
+                                    class = "form-control"
+                                    placeholder="Enter Paid Money"
+                            />
+                        </div>
+                        <div class ="form-group">
+                            <label> Payback Money </label>
+                            <input
+                                    type = "text"
+                                    name = "payBack"
+                                    th:field = "*{payBack}"
+                                    class = "form-control"
+                                    readonly="true"
+
+                            />
+                        </div>
+                        <div class = "box-footer">
+                            <button type="submit" class = "btn btn-primary" onclick="window.location.href='@{/items/checkout}'">
+                                Checkout
+                            </button>
+                            <button type="button" class = "btn btn-primary" onclick="window.location.href='/items/reset'">
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <h1>Basket List</h1>
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each = "item : ${basket.itemsMap}">
+                        <td th:text = "${item.key.itemName}"></td>
+                        <td th:text = "${item.value}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

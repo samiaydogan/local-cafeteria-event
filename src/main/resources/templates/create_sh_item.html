@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Cafeteria</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Local Cafeteria</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/items}">Local Cafeteria</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<div class = "container">
+  <div class = "row">
+    <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+      <h1 class = "text-center"> Create New Second Hand Item </h1>
+      <div class = "card-body">
+        <form th:action="@{/items}" enctype="multipart/form-data" th:object = "${item}" method="POST">
+          <div class ="form-group">
+            <label> Item Name </label>
+            <input
+                    type = "text"
+                    name = "itemName"
+                    th:field = "*{itemName}"
+                    class = "form-control"
+                    placeholder="Enter Item Name"
+            />
+          </div>
+
+          <div class ="form-group">
+            <label> Item Price </label>
+            <input
+                    type = "text"
+                    name = "itemPrice"
+                    th:field = "*{itemPrice}"
+                    class = "form-control"
+                    placeholder="Enter Item Price"
+            />
+          </div>
+
+          <div class ="form-group">
+            <label> Item Quantity </label>
+            <input
+                    type = "text"
+                    name = "itemQuantity"
+                    th:field = "*{itemQuantity}"
+                    class = "form-control"
+                    placeholder="Enter Item Quantity"
+            />
+          </div>
+
+          <div class="form-group">
+            <label> Item Image </label>
+            <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    class="form-control-file"
+                    placeholder="Upload an Item Image">
+          </div>
+
+          <div class = "box-footer">
+            <button type="submit" class = "btn btn-primary">
+              Submit
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
